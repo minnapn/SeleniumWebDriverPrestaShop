@@ -1,0 +1,10 @@
+{
+  "t-shirt": {
+    "searchString": "t-shirt",
+    "expectedResults": 1
+  },
+  "bear": {
+    "searchString": "bear",
+    "expectedResults": 3
+  }
+}

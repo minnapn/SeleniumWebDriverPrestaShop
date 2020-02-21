@@ -1,0 +1,47 @@
+{
+  "gubbe1": {
+    "firstName": "Test",
+    "lastName": "Testing",
+    "email": "farmor@test.se",
+    "password": "12345",
+    "address" : "Teststreet 1",
+    "city" : "Testtown",
+    "postcode" : "12345"
+  },
+  "gubbe2": {
+    "firstName": "Test",
+    "lastName": "Testing",
+    "email": "vargen@test.se",
+    "password": "12345",
+    "address" : "Teststreet 1",
+    "city" : "Testtown",
+    "postcode" : "12345"
+  },
+  "gubbe3": {
+    "firstName": "Test",
+    "lastName": "Testing",
+    "email": "skalman@test.se",
+    "password": "12345",
+    "address" : "Teststreet 1",
+    "city" : "Testtown",
+    "postcode" : "12345"
+  },
+  "gubbe4": {
+    "firstName": "Test",
+    "lastName": "Testing",
+    "email": "bamse@test.se",
+    "password": "12345",
+    "address" : "Teststreet 1",
+    "city" : "Testtown",
+    "postcode" : "12345"
+  },
+  "gubbe5": {
+    "firstName": "Test",
+    "lastName": "Testing",
+    "email": "lilleskutt@test.se",
+    "password": "12345",
+    "address" : "Teststreet 1",
+    "city" : "Testtown",
+    "postcode" : "12345"
+  }
+}

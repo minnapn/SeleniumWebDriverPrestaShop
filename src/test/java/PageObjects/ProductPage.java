@@ -3,34 +3,31 @@ package PageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ItemPage {
-    WebDriverWait wait;
-    WebDriver driver;
+public class ProductPage extends Page{
 
-    By name = By.cssSelector("#main > div.row > div:nth-child(2) > h1");// By.cssSelector("[itemprop=\"name\"]");
-    By price = By.cssSelector("#main > div.row > div:nth-child(2) > div.product-prices > div.product-price.h5.has-discount > div > span:nth-child(1)");//By.cssSelector("[itemprop=\"price\"]");
-    By addToCartButton = By.cssSelector("#add-to-cart-or-refresh > div.product-add-to-cart > div > div.add > button");
+    By name = By.cssSelector("h1");
+    By price = By.cssSelector(".current-price > span:nth-child(1)");
+    By addToCartButton = By.cssSelector(".add-to-cart");
 
-    public ItemPage(WebDriver driver){
-        this.driver = driver;
-        wait = new WebDriverWait(driver, 30);
+    public ProductPage(WebDriver driver){
+       super(driver);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(name));
     }
 
-    public void clickAddToCartButton(){
+    public ProductAddedPage clickAddToCartButton(){
         driver.findElement(addToCartButton).click();
+        ProductAddedPage productAddedPage = new ProductAddedPage(driver);
+        return productAddedPage;
     }
 
-    public String getItemName(){
+    public String getProductName(){
         return driver.findElement(name).getText();
     }
 
-    public String getItemPrice() {
-        return driver.findElement(price).getText();
+    public double getProductPrice() {
+        String priceString = driver.findElement(price).getText();
+        return Double.parseDouble(priceString.substring(1));
     }
 
-    public void waitForItemDescriptionVisibile() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(name));
-    }
 }

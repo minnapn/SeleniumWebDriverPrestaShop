@@ -3,11 +3,8 @@ package PageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class CreateAccountPage {
-    private WebDriver driver;
-    private WebDriverWait wait;
+public class CreateAccountPage extends Page{
 
     private By header = By.cssSelector("#main > header > h1");
     private By firstNameInput = By.name("firstname");
@@ -19,13 +16,10 @@ public class CreateAccountPage {
 
 
     public CreateAccountPage(WebDriver driver){
-        this.driver = driver;
-        wait = new WebDriverWait(driver, 30);
-    }
-
-    public void waitForHeaderVisible(){
+        super(driver);
         wait.until(ExpectedConditions.visibilityOfElementLocated(header));
     }
+
 
     public void clickSaveButton(){
         driver.findElement(saveButton).click();
@@ -37,20 +31,30 @@ public class CreateAccountPage {
         }
     }
 
-    public void populateEmail(String email){
+    public void setEmail(String email){
         driver.findElement(emailInput).sendKeys(email);
     }
 
-    public void populatePassword(String password){
+    public void setPassword(String password){
         driver.findElement(passwordInput).sendKeys(password);
     }
 
-    public void populatefirstName(String firstName){
+    public void setFirstName(String firstName){
         driver.findElement(firstNameInput).sendKeys(firstName);
     }
 
-    public void populatelastName(String lastName){
+    public void setLastName(String lastName){
         driver.findElement(lastNameInput).sendKeys(lastName);
+    }
+
+    public HomePage createAccount(String firsName, String lastName, String email, String password) {
+        setEmail(email);
+        setFirstName(firsName);
+        setLastName(lastName);
+        setPassword(password);
+        setGdprCheckBox(true);
+        clickSaveButton();
+        return new HomePage(driver);
     }
 
 
