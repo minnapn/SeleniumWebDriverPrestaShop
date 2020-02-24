@@ -6,12 +6,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CheckOutAddressesPage extends Page{
 
-    By firstNameInput = By.name("firstname");
-    By lastNameInput = By.name("lastname");
-    By addressInput = By.name("address1");
-    By postcodeInput = By.name("postcode");
-    By cityInput = By.name("city");
-    By continueButton = By.cssSelector("#delivery-address > div > footer > button");
+    private By firstNameInput = By.name("firstname");
+    private By lastNameInput = By.name("lastname");
+    private By addressInput = By.name("address1");
+    private By postcodeInput = By.name("postcode");
+    private By cityInput = By.name("city");
+    private By continueButton = By.cssSelector("#delivery-address > div > footer > button");
 
     public CheckOutAddressesPage(WebDriver driver) {
         super(driver);

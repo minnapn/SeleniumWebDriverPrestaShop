@@ -6,11 +6,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class OrderConfirmationPage extends Page {
 
-    //By header = By.cssSelector("#content-hook_order_confirmation > div > div > div > h3");
-    By header = By.cssSelector("h3");
-    By totalValue = By.cssSelector(".total-value > td:nth-child(2)");
-    By productInfo = By.cssSelector(".col-sm-4 > span");
-    By emailConfirmation = By.cssSelector("p");
+    private By header = By.cssSelector("h3");
+    private By totalValue = By.cssSelector(".total-value > td:nth-child(2)");
+    private By productInfo = By.cssSelector(".col-sm-4 > span");
+    private By emailConfirmation = By.cssSelector("p");
 
 
     public OrderConfirmationPage(WebDriver driver) {

@@ -6,8 +6,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class SearchResultsPage extends Page {
 
-    By header = By.cssSelector(".h2");
-    By totalProducts = By.cssSelector(".total-products");
+    private By header = By.cssSelector(".h2");
+    private By totalProducts = By.cssSelector(".total-products");
 
     public SearchResultsPage(WebDriver driver){
         super(driver);

@@ -6,12 +6,19 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class HomePage extends Page{
 
-    By sectionTitle = By.cssSelector("#content > section > h2");
+    private By sectionTitle = By.cssSelector("#content > section > h2");
 
     public HomePage(WebDriver driver) {
         super(driver);
         wait.until(ExpectedConditions.visibilityOfElementLocated(sectionTitle));
     }
+
+    public static HomePage goToHomePage(WebDriver driver){
+        driver.get("http://demo.prestashop.com");
+        driver.switchTo().frame("framelive");
+        return new HomePage(driver);
+    }
+
 
     public By getProductNumber(int i){
         //return By.cssSelector(".product-miniature:nth-child(" + i + ")img");

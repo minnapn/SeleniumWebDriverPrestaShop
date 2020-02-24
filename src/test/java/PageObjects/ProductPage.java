@@ -6,9 +6,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ProductPage extends Page{
 
-    By name = By.cssSelector("h1");
-    By price = By.cssSelector(".current-price > span:nth-child(1)");
-    By addToCartButton = By.cssSelector(".add-to-cart");
+    private By name = By.cssSelector("h1");
+    private By price = By.cssSelector(".current-price");
+    private By addToCartButton = By.cssSelector(".add-to-cart");
 
     public ProductPage(WebDriver driver){
        super(driver);

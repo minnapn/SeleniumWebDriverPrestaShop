@@ -2,34 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a5dfcb67-5f97-4bcd-bc7c-930b221ff519" name="Default Changelist" comment="Complete test cases, better POM, TODO: need to update locators">
-      <change afterPath="$PROJECT_DIR$/TestSearchStrings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TestUser.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/PageObjects/SearchResultsPage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/PageObjects/SignInAtCheckOutPage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/TestDataObjects/TestSearchString.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/TestDataObjects/TestUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Tools.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TestDataObjects/TestDataSetUp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestSearchStrings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestUser.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/CartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/CartPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/CheckOutAddressesPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/CheckOutAddressesPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/CheckOutPaymentPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/CheckOutPaymentPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/CheckOutPersonalPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/CheckOutPersonalPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/CheckOutShippingPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/CheckOutShippingPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/CreateAccountPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/CreateAccountPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/HomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/HomePage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/OrderConfirmationPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/OrderConfirmationPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/Page.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/ProductAddedPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/ProductAddedPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/ProductPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/ProductPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/SearchResultsPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/SearchResultsPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/SignInAtCheckOutPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/SignInAtCheckOutPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/SignInPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/SignInPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/TopMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/TopMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PrestaShopTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PrestaShopTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/PageObjects/CreateAccountPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PageObjects/CreateAccountPage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/PageObjects/SignInPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PageObjects/SignInPage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestDataObjects/TestSearchString.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestDataObjects/TestUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestDataObjects/TestUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Tools.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/PageObjects/TopMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PageObjects/TopMenu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/PrestaShopTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PrestaShopTests.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/TestRunner.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/TestRunner.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -85,7 +78,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TestRunner">
+  <component name="RunManager" selected="JUnit.PrestaShopTests">
     <configuration name="TestRunner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="TestRunner" />
       <module name="PrestaShopTest" />
@@ -93,11 +86,30 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PrestaShopTests.TestCheckoutWithoutAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PrestaShopTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PrestaShopTest" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="PrestaShopTests" />
-      <option name="METHOD_NAME" value="TestCheckoutWithoutAccount" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrestaShopTests.testChangeQuantityAtCheckOut" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PrestaShopTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="PrestaShopTests" />
+      <option name="METHOD_NAME" value="testChangeQuantityAtCheckOut" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrestaShopTests.testContactUs" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PrestaShopTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="PrestaShopTests" />
+      <option name="METHOD_NAME" value="testContactUs" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -113,33 +125,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PrestaShopTests.testLoginAtCheckOut" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="PrestaShopTest" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="PrestaShopTests" />
-      <option name="METHOD_NAME" value="testLoginAtCheckOut" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PrestaShopTests.testSearchProduct" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="PrestaShopTest" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="PrestaShopTests" />
-      <option name="METHOD_NAME" value="testSearchProduct" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TestRunner" />
-        <item itemvalue="JUnit.PrestaShopTests.TestCheckoutWithoutAccount" />
-        <item itemvalue="JUnit.PrestaShopTests.testLoginAtCheckOut" />
+        <item itemvalue="JUnit.PrestaShopTests" />
         <item itemvalue="JUnit.PrestaShopTests.testCreateAccount" />
-        <item itemvalue="JUnit.PrestaShopTests.testSearchProduct" />
+        <item itemvalue="JUnit.PrestaShopTests.testChangeQuantityAtCheckOut" />
+        <item itemvalue="Application.TestRunner" />
+        <item itemvalue="JUnit.PrestaShopTests.testContactUs" />
       </list>
     </recent_temporary>
   </component>
@@ -154,6 +146,13 @@
       <option name="presentableId" value="Default" />
       <updated>1581497532376</updated>
     </task>
+    <task id="LOCAL−00001" summary="Complete test cases, better POM, TODO: need to update locators">
+      <created>1582295763058</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1582295763058</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

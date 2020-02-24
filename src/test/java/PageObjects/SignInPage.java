@@ -6,11 +6,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class SignInPage extends Page{
 
-    By header = By.cssSelector("h1");
-    By emailInput = By.name("email");
-    By passwordInput = By.name("password");
-    By signInButton = By.id("submit-login");
-    By createNewAccountLink = By.className("no-account");
+    private By header = By.cssSelector("h1");
+    private By emailInput = By.name("email");
+    private By passwordInput = By.name("password");
+    private By signInButton = By.id("submit-login");
+    private By createNewAccountLink = By.className("no-account");
 
 
     public SignInPage(WebDriver driver){

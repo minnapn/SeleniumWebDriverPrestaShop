@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CheckOutShippingPage extends Page{
 
-    By continueButton = By.name("confirmDeliveryOption");
+    private By continueButton = By.name("confirmDeliveryOption");
 
     public CheckOutShippingPage(WebDriver driver) {
         super(driver);

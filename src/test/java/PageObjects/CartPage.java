@@ -7,17 +7,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CartPage extends Page{
 
-
-    By header = By.cssSelector("h1");
-    By checkOut = By.linkText("PROCEED TO CHECKOUT");
-    By errorMessage = By.cssSelector("#notifications > div > article");
-    By numberOfItems = By.cssSelector("#cart-subtotal-products > span.label.js-subtotal");
-    By increase = By.cssSelector(".touchspin-up");
-    By decrease = By.cssSelector(".touchspin-down");
-    By delete = By.cssSelector(".remove-from-cart > .material-icons");
-    By zeroItems = By.cssSelector(".no-items");
-    By totalPrice = By.cssSelector(".cart-summary-totals > div > span.value");
-
+    private By header = By.cssSelector("h1");
+    private By checkOut = By.linkText("PROCEED TO CHECKOUT");
+    private By errorMessage = By.cssSelector("#notifications > div > article");
+    private By numberOfItems = By.cssSelector(".js-subtotal");
+    private By totalPrice = By.cssSelector(".cart-summary-totals > div > span.value");
+    private By zeroItems = By.cssSelector(".no-items");
+    private By increase = By.cssSelector(".touchspin-up");
+    private By decrease = By.cssSelector(".touchspin-down");
+    private By delete = By.cssSelector(".remove-from-cart > .material-icons");
 
     public CartPage(WebDriver driver) {
         super(driver);

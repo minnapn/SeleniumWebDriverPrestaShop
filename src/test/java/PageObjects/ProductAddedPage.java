@@ -7,10 +7,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProductAddedPage extends Page{
 
-    By checkoutButton = By.cssSelector(".cart-content-btn > .btn-primary");
-    By amountOfProducts = By.cssSelector("p.cart-products-count");
-    By priceOfProducts = By.cssSelector("span.value");
-    By productName = By.cssSelector("h6");
+    private By checkoutButton = By.cssSelector(".cart-content-btn > .btn-primary");
+    private By amountOfProducts = By.cssSelector("p.cart-products-count");
+    private By priceOfProducts = By.cssSelector("span.value");
+    private By productName = By.cssSelector("h6");
 
 
     public ProductAddedPage(WebDriver driver) {

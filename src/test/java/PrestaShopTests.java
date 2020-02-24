@@ -1,33 +1,40 @@
 import PageObjects.*;
-import TestDataObjects.TestSearchString;
 import org.junit.*;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import TestDataObjects.*;
 
 public class PrestaShopTests {
 
-    TopMenu topMenu;
-    HomePage homePage;
-    static Map<String, TestUser> testUsers;
-    static Map<String, TestSearchString> testSearchStrings;
-    static Tools driverTools;
+    private static WebDriver driver;
+    private static TopMenu topMenu;
+    private static HomePage homePage;
+    private static Map<String, TestUser> testUsers;
+    private static Map<String, Integer> testSearchStrings;
 
     @BeforeClass
-    public static void beforeClass() throws IOException {
-        driverTools = new Tools(new ChromeDriver());
-        testUsers = driverTools.loadTestUsers();
-        testSearchStrings = driverTools.loadTestSerachStrings();
+    public static void beforeClass(){
+        driver = new ChromeDriver();
+        testUsers = TestDataSetUp.loadTestUsers();
+        testSearchStrings = TestDataSetUp.loadSearchStrings();
     }
 
     @Before
-    public void before() {
-        homePage = driverTools.toStartPage();
-        topMenu = driverTools.getTopMenu();
+    public void setup() {
+        homePage = HomePage.goToHomePage(driver);
+        topMenu = new TopMenu(driver);
     }
 
+    @After
+    public void  tearDown() {
+        //Teardown tests
+    }
 
     /**
      * 1 As a customer I want to be able to register an account so I can keep track of my purchases.
@@ -35,9 +42,9 @@ public class PrestaShopTests {
     @Test
     public void testCreateAccount() {
         //choosing test data
-        TestUser testUser = testUsers.get("gubbe1");
+        TestUser testUser = testUsers.get("theSwede");
 
-        driverTools.doCreateAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.password);
+        createAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.password);
 
         //Check that login worked by sign out becoming visible
         Assert.assertTrue(topMenu.signOutVisible());
@@ -56,32 +63,17 @@ public class PrestaShopTests {
     @Test
     public void TestCheckoutWithoutAccount() {
         //choosing test data
-        TestUser testUser = testUsers.get("gubbe2");
-        int productNumber = 1;
+        TestUser testUser = testUsers.get("theLongie");
+        int productPosition = 1; //The position on the page of the product that will be bought
 
         //Saving info about product name and price of the product that will be bought.
-        String expectedProductName = homePage.getProductNameNumber(productNumber);
-        double expectedPrice = homePage.getProductPriceNumber(productNumber);
+        final String expectedProductName = homePage.getProductNameNumber(productPosition);
+        final double expectedPrice = homePage.getProductPriceNumber(productPosition);
 
-        ProductPage productPage = homePage.clickProductNumber(productNumber);
-
-        //Check that product on product page matches the product clicked.
-        Assert.assertTrue(expectedProductName.equalsIgnoreCase(productPage.getProductName()));
-
-        ProductAddedPage productAddedPage = productPage.clickAddToCartButton();
-
-        //Check that right product is added, correct price and amount of products in cart.
-        Assert.assertTrue(expectedProductName.equalsIgnoreCase(productAddedPage.getProductName()));
-        Assert.assertEquals(1, productAddedPage.getAmountOfProducts());
-        Assert.assertEquals(expectedPrice, productAddedPage.getPriceOfProducts(), 0.1);
-
-        CartPage cartPage = productAddedPage.clickCheckout();
-
-        //Check that price is correct in cart
-        Assert.assertEquals(expectedPrice, cartPage.getTotalPrice(),0.1);
+        CartPage cartPage
+                = addProductAndProceedToCart(productPosition, expectedProductName, expectedPrice);
 
         CheckOutPersonalPage checkOutPersonalPage = cartPage.clickCheckOut();
-
 
         CheckOutAddressesPage checkOutAddressesPage
                 = checkOutPersonalPage.setMandatoryFieldsAndContinue(testUser.firstName, testUser.lastName, testUser.email);
@@ -99,14 +91,12 @@ public class PrestaShopTests {
         checkOutPaymentPage.chooseBankWire();
         checkOutPaymentPage.setConditionsBox(true);
         OrderConfirmationPage orderConfirmationPage = checkOutPaymentPage.clickOrder();
-
         //Check that order confirmation has the correct price, product and email.
         Assert.assertEquals(expectedPrice, orderConfirmationPage.getTotalValue(),0.1);
         Assert.assertTrue(orderConfirmationPage.getEmailConformationText().contains(testUser.email));
-
+        // TODO Add comment
         String orderConfirmationProductInfo = orderConfirmationPage.getProductInfo().toLowerCase();
-        expectedProductName = expectedProductName.toLowerCase();
-        Assert.assertTrue(orderConfirmationProductInfo.contains(expectedProductName));
+        Assert.assertTrue(orderConfirmationProductInfo.contains(expectedProductName.toLowerCase()));
     }
 
 
@@ -116,32 +106,18 @@ public class PrestaShopTests {
     @Test
     public void testLoginAtCheckOut() {
         //choosing test data
-        TestUser testUser = testUsers.get("gubbe5");
-        int productNumber = 2;
+        TestUser testUser = testUsers.get("theShortie");
+        int productPosition = 2; //The position on the page of the product that will be bought
 
-        driverTools.doCreateAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.password);
+        createAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.password);
         topMenu.clickSignOut();
 
         //Saving info about product name and price of the product that will be bought.
-        String expectedProductName = homePage.getProductNameNumber(productNumber);
-        Double expectedPrice = homePage.getProductPriceNumber(productNumber);
+        final String expectedProductName = homePage.getProductNameNumber(productPosition);
+        final double expectedPrice = homePage.getProductPriceNumber(productPosition);
 
-        ProductPage productPage = homePage.clickProductNumber(productNumber);
-
-        //Check that product on product page matches the product clicked.
-        Assert.assertTrue(expectedProductName.equalsIgnoreCase(productPage.getProductName()));
-
-        ProductAddedPage productAddedPage = productPage.clickAddToCartButton();
-
-        //Check that right product is added, correct price and amount of products in cart.
-        Assert.assertTrue(expectedProductName.equalsIgnoreCase(productAddedPage.getProductName()));
-        Assert.assertEquals(1, productAddedPage.getAmountOfProducts());
-        Assert.assertEquals(expectedPrice, productAddedPage.getPriceOfProducts());
-
-        CartPage cartPage = productAddedPage.clickCheckout();
-
-        //Check that price is correct in cart
-        Assert.assertEquals(expectedPrice, cartPage.getTotalPrice(), 0.1);
+        CartPage cartPage
+                = addProductAndProceedToCart(productPosition, expectedProductName, expectedPrice);
 
         CheckOutPersonalPage checkOutPersonalPage = cartPage.clickCheckOut();
 
@@ -160,8 +136,7 @@ public class PrestaShopTests {
         Assert.assertTrue(orderConfirmationPage.getEmailConformationText().contains(testUser.email));
 
         String orderConfirmationProductInfo = orderConfirmationPage.getProductInfo().toLowerCase();
-        expectedProductName = expectedProductName.toLowerCase();
-        Assert.assertTrue(orderConfirmationProductInfo.contains(expectedProductName));
+        Assert.assertTrue(orderConfirmationProductInfo.contains(expectedProductName.toLowerCase()));
 
         //Cleaning
         topMenu.clickSignOut();
@@ -174,30 +149,31 @@ public class PrestaShopTests {
      */
     @Test
     public void testChangeQuantityAtCheckOut() {
-        int productNumber = 2;
+        final int productPosition = 2; //The position on the page of the product that will be added to cart
 
-        double productPrice = homePage.getProductPriceNumber(productNumber);
-        CartPage cartPage = driverTools.doAddProductToCart(productNumber);
+        //Saving info about product name and price of the product that will be bought.
+        final double productPrice = homePage.getProductPriceNumber(productPosition);
+        final String productName = homePage.getProductNameNumber(productPosition);
 
+        CartPage cartPage
+                = addProductAndProceedToCart(productPosition, productName, productPrice);
         //Check that number of products and price changes correct while increasing amount of products
-        for(int i = 1; i < 5; i++) {
-            Assert.assertEquals(i, cartPage.getTotalNrOfItems());
-            Assert.assertEquals(productPrice*i, cartPage.getTotalPrice(), 0.1);
+        for(int nbrOfItems = 1; nbrOfItems < 5; nbrOfItems++) {
+            Assert.assertEquals(nbrOfItems, cartPage.getTotalNrOfItems());
+            Assert.assertEquals(productPrice*nbrOfItems, cartPage.getTotalPrice(), 0.1);
             cartPage.increaseQuantity();
         }
 
         //Check that number of products and price changes correct while decreasing amount of products
-        for(int i = 5; i > 0; i--) {
-            Assert.assertEquals(i, cartPage.getTotalNrOfItems());
-            Assert.assertEquals(productPrice*i, cartPage.getTotalPrice(), 0.1);
+        for(int nbrOfItems = 5; nbrOfItems > 0; nbrOfItems--) {
+            Assert.assertEquals(nbrOfItems, cartPage.getTotalNrOfItems());
+            Assert.assertEquals(productPrice*nbrOfItems, cartPage.getTotalPrice(), 0.1);
             cartPage.decreaseQuantity();
         }
-
         //Check that error message occurs when trying to decrease from 1.
         Assert.assertTrue(cartPage.getErrorMessage().contains("The minimum purchase order quantity"));
 
         cartPage.clickDelete();
-
         //Check that product got deleted.
         Assert.assertTrue(cartPage.noMoreItemsVisible());
     }
@@ -209,19 +185,19 @@ public class PrestaShopTests {
      */
     @Test
     public void testSearchProduct() {
-        TestSearchString testData = testSearchStrings.get("bear");
+        final String searchString = "bear";
+        final int expectedNbrOfHits = testSearchStrings.get("bear");
 
-        SearchResultsPage searchResultsPage = topMenu.searchCatalog(testData.searchString);
-        String searchString = testData.searchString.toLowerCase();
+        SearchResultsPage searchResultsPage = topMenu.searchCatalog(searchString);
 
         int foundProducts = searchResultsPage.getNumberOfFoundProducts();
 
         //Check if number of found results is as expected
-        Assert.assertEquals(testData.expectedResults, foundProducts);
+        Assert.assertEquals(expectedNbrOfHits, foundProducts);
 
         //Check if products found contains the searched string
-        for(int i = 1; i <= foundProducts; i++) {
-            String foundProductName = searchResultsPage.getProductNameForResult(i).toLowerCase();
+        for(int productPosition = 1; productPosition <= foundProducts; productPosition++) {
+            String foundProductName = searchResultsPage.getProductNameForResult(productPosition).toLowerCase();
             Assert.assertTrue(foundProductName.contains(searchString));
         }
 
@@ -233,4 +209,31 @@ public class PrestaShopTests {
         //driver.quit();
     }
 
+
+
+    public void createAccount(String firstName, String lastName, String email, String password) {
+        SignInPage signInPage = topMenu.clickSignIn();
+        CreateAccountPage createAccountPage = signInPage.clickCreateAccount();
+        createAccountPage.createAccount(firstName, lastName, email, password);
+    }
+
+
+    public CartPage addProductAndProceedToCart(int productNumber, String expectedProductName, double expectedPrice) {
+        ProductPage productPage = homePage.clickProductNumber(productNumber);
+
+        //Check that product on product page matches the product clicked.
+        Assert.assertTrue(expectedProductName.equalsIgnoreCase(productPage.getProductName()));
+
+        ProductAddedPage productAddedPage = productPage.clickAddToCartButton();
+
+        //Check that right product is added, correct price and amount of products in cart.
+        Assert.assertTrue(expectedProductName.equalsIgnoreCase(productAddedPage.getProductName()));
+        Assert.assertEquals(1, productAddedPage.getAmountOfProducts());
+        Assert.assertEquals(expectedPrice, productAddedPage.getPriceOfProducts(), 0.1);
+
+        CartPage cartPage = productAddedPage.clickCheckout();
+        //Check that price is correct in cart
+        Assert.assertEquals(expectedPrice, cartPage.getTotalPrice(),0.1);
+        return cartPage;
+    }
 }
