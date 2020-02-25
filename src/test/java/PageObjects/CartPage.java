@@ -10,7 +10,7 @@ public class CartPage extends Page{
     private By header = By.cssSelector("h1");
     private By checkOut = By.linkText("PROCEED TO CHECKOUT");
     private By errorMessage = By.cssSelector("#notifications > div > article");
-    private By numberOfItems = By.cssSelector(".js-subtotal");
+    private By nmbrOfItems = By.cssSelector(".js-subtotal");
     private By totalPrice = By.cssSelector(".cart-summary-totals > div > span.value");
     private By zeroItems = By.cssSelector(".no-items");
     private By increase = By.cssSelector(".touchspin-up");
@@ -28,20 +28,20 @@ public class CartPage extends Page{
     }
 
     public void increaseQuantity(){
-        int items = getTotalNrOfItems();
+        int items = getTotalNmbrOfItems();
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.presenceOfElementLocated(increase)).click();
-        wait.until(ExpectedConditions.textToBe(numberOfItems, items+1 + " items"));
+        wait.until(ExpectedConditions.textToBe(nmbrOfItems, items+1 + " items"));
     }
 
     public void decreaseQuantity(){
-        int items = getTotalNrOfItems();
+        int items = getTotalNmbrOfItems();
         wait.until(ExpectedConditions.presenceOfElementLocated(decrease)).click();
         if (items > 2) {
-            wait.until(ExpectedConditions.textToBe(numberOfItems, items - 1 + " items"));
+            wait.until(ExpectedConditions.textToBe(nmbrOfItems, items - 1 + " items"));
         }
         else {
-            wait.until(ExpectedConditions.textToBe(numberOfItems,"1 item"));
+            wait.until(ExpectedConditions.textToBe(nmbrOfItems,"1 item"));
         }
     }
 
@@ -49,8 +49,7 @@ public class CartPage extends Page{
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(zeroItems));
             return true;
-        }
-        catch (Exception e) {
+        } catch(Exception e) {
             return false;
         }
     }
@@ -64,26 +63,12 @@ public class CartPage extends Page{
         return new CheckOutPersonalPage(driver);
     }
 
-    public int getTotalNrOfItems(){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(numberOfItems));
-        String nrOfItemsText = driver.findElement(numberOfItems).getText();
-        return subStringUntilFirstSpace(nrOfItemsText);
+    public int getTotalNmbrOfItems(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nmbrOfItems));
+        String nmbrOfItemsText = driver.findElement(nmbrOfItems).getText().replaceAll("\\D+","");
+        int nmbrOfItems = Integer.parseInt(nmbrOfItemsText);
+        return nmbrOfItems;
     }
-
-    public int subStringUntilFirstSpace(String string){
-        String newString = "";
-        for (int i = 0; i < string.length(); i++){
-            if (string.charAt(i) != ' ')
-            {
-                newString = newString + string.charAt(i);
-            }
-            else{
-                return Integer.parseInt(newString);
-            }
-            }
-        return Integer.parseInt(newString);
-        }
-
 
     public String getErrorMessage(){
         wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage));

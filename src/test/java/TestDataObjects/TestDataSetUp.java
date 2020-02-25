@@ -5,10 +5,10 @@ import java.util.HashMap;
 public class TestDataSetUp {
 
     //Returns a map of Key-string/Value-integer where the integer is the expected number of hits when the string is searched.
-    public static HashMap<String, Integer> loadSearchStrings(){
-        HashMap<String, Integer> testSearchStrings = new HashMap<>();
-        testSearchStrings.put("bear", 3);
-        testSearchStrings.put("t-shirt", 1);
+    public static HashMap<String, TestSearch> loadSearchStrings(){
+        HashMap<String, TestSearch> testSearchStrings = new HashMap<>();
+        testSearchStrings.put("bear", new TestSearch("bear", 3));
+        testSearchStrings.put("t-shirt", new TestSearch("t-shirt", 1));
         return testSearchStrings;
     }
 

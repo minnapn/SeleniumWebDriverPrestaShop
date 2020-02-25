@@ -7,10 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class SignInAtCheckOutPage extends Page{
 
     By emailInput = By.cssSelector("#login-form > section > div:nth-child(2) > div.col-md-6 > input");
-    //By emailInput = By.xpath("//input[@name='email'])[2]");
     By passwordInput = By.cssSelector("#login-form > section > div:nth-child(3) > div.col-md-6 > div > input");
-    //By passwordInput = By.cssSelector("input[@name='password'])[2]");
-
     By signInButton = By.cssSelector("#login-form > footer > button");
 
 

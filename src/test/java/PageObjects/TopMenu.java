@@ -3,6 +3,7 @@ package PageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TopMenu extends Page{
 
@@ -12,8 +13,8 @@ public class TopMenu extends Page{
     private By customerAccount = By.cssSelector("a.account");
     private By searchInput = By.name("s");
     private final By searchButton = By.cssSelector("#search_widget > form > button");
-    private By cartIcon = By.cssSelector(".block-cart > .materials-icon");
-
+    private By cartIcon = By.id("_desktop_cart");
+    private By itemsInCart = By.cssSelector("span.cart-products-count");
 
     public TopMenu(WebDriver driver) {
         super(driver);
@@ -23,6 +24,16 @@ public class TopMenu extends Page{
     public HomePage clickHome() {
         driver.findElement(homeLink).click();
         return new HomePage(driver);
+    }
+
+    public CartPage clickCartIcon() {
+        driver.findElement(cartIcon).click();
+        return new CartPage(driver);
+    }
+
+    public int getNmbrOfItemsInCart(){
+        String nmbrOfItemsInCart = driver.findElement(itemsInCart).getText().replaceAll("\\D+","");
+        return Integer.parseInt(nmbrOfItemsInCart);
     }
 
     public void clickSignOut() {
@@ -42,13 +53,13 @@ public class TopMenu extends Page{
         return new SearchResultsPage(driver);
     }
 
-    public boolean cartClickable() {
-        return driver.findElement(cartIcon).isEnabled();
-    }
-
     public boolean signOutVisible() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(signOut));
-        return driver.findElement(signOut).isDisplayed();
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 1);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(signOut));
+            return true;
+        }
+        catch(Exception e) { return false; }
     }
 
     public String getTextAccountName(){

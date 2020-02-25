@@ -3,10 +3,7 @@ import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.io.IOException;
-import java.sql.Time;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import TestDataObjects.*;
 
@@ -16,7 +13,7 @@ public class PrestaShopTests {
     private static TopMenu topMenu;
     private static HomePage homePage;
     private static Map<String, TestUser> testUsers;
-    private static Map<String, Integer> testSearchStrings;
+    private static Map<String, TestSearch> testSearchStrings;
 
     @BeforeClass
     public static void beforeClass(){
@@ -26,14 +23,25 @@ public class PrestaShopTests {
     }
 
     @Before
-    public void setup() {
+    public void setUp() {
         homePage = HomePage.goToHomePage(driver);
         topMenu = new TopMenu(driver);
     }
 
     @After
     public void  tearDown() {
-        //Teardown tests
+        if (topMenu.getNmbrOfItemsInCart() > 0) {
+            CartPage cartPage = topMenu.clickCartIcon();
+            cartPage.clickDelete();
+        }
+        if (topMenu.signOutVisible()) {
+            topMenu.clickSignOut();
+        }
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        driver.quit();
     }
 
     /**
@@ -42,18 +50,14 @@ public class PrestaShopTests {
     @Test
     public void testCreateAccount() {
         //choosing test data
-        TestUser testUser = testUsers.get("theSwede");
+        TestUser testUser = testUsers.get("theLongie");
 
         createAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.password);
-
         //Check that login worked by sign out becoming visible
         Assert.assertTrue(topMenu.signOutVisible());
-
         //Check that logged in to the correct account
         Assert.assertEquals(testUser.firstName + " " + testUser.lastName, topMenu.getTextAccountName());
 
-        //Reset for next test
-        topMenu.clickSignOut();
     }
 
 
@@ -63,38 +67,36 @@ public class PrestaShopTests {
     @Test
     public void TestCheckoutWithoutAccount() {
         //choosing test data
-        TestUser testUser = testUsers.get("theLongie");
-        int productPosition = 1; //The position on the page of the product that will be bought
+        TestUser testUser = testUsers.get("theSwede");
+        int productPosition = 1; //The position on the page of the product that will be bought (1-8)
 
         //Saving info about product name and price of the product that will be bought.
-        final String expectedProductName = homePage.getProductNameNumber(productPosition);
-        final double expectedPrice = homePage.getProductPriceNumber(productPosition);
+        final String expectedProductName = homePage.getProductNameForPosition(productPosition);
+        final double expectedPrice = homePage.getProductPriceForPosition(productPosition);
 
-        CartPage cartPage
-                = addProductAndProceedToCart(productPosition, expectedProductName, expectedPrice);
+        CartPage cartPage = addProductAndProceedToCart(productPosition, expectedProductName, expectedPrice); //This method also contains asserts.
 
-        CheckOutPersonalPage checkOutPersonalPage = cartPage.clickCheckOut();
-
-        CheckOutAddressesPage checkOutAddressesPage
-                = checkOutPersonalPage.setMandatoryFieldsAndContinue(testUser.firstName, testUser.lastName, testUser.email);
-
-
+        CheckOutPersonalPage checkOutPersonalPage = cartPage
+                .clickCheckOut();
+        CheckOutAddressesPage checkOutAddressesPage = checkOutPersonalPage
+                .setMandatoryFieldsAndContinue(testUser.firstName, testUser.lastName, testUser.email);
         //Check that name is filled with the name that was set in previous step
         Assert.assertEquals(testUser.firstName, checkOutAddressesPage.getFirstName());
         Assert.assertEquals(testUser.lastName, checkOutAddressesPage.getLastName());
 
-        CheckOutShippingPage checkOutShippingPage
-                = checkOutAddressesPage.setMandatoryFieldsAndContinue(testUser.address, testUser.postcode, testUser.city);
-
-        CheckOutPaymentPage checkOutPaymentPage = checkOutShippingPage.clickContinue();
-
-        checkOutPaymentPage.chooseBankWire();
-        checkOutPaymentPage.setConditionsBox(true);
-        OrderConfirmationPage orderConfirmationPage = checkOutPaymentPage.clickOrder();
+        CheckOutShippingPage checkOutShippingPage = checkOutAddressesPage
+                .setMandatoryFieldsAndContinue(testUser.address, testUser.postcode, testUser.city);
+        CheckOutPaymentPage checkOutPaymentPage = checkOutShippingPage
+                .clickContinue();
+        checkOutPaymentPage
+                .chooseBankWire();
+        checkOutPaymentPage
+                .setConditionsBox(true);
+        OrderConfirmationPage orderConfirmationPage = checkOutPaymentPage
+                .clickOrder();
         //Check that order confirmation has the correct price, product and email.
         Assert.assertEquals(expectedPrice, orderConfirmationPage.getTotalValue(),0.1);
         Assert.assertTrue(orderConfirmationPage.getEmailConformationText().contains(testUser.email));
-        // TODO Add comment
         String orderConfirmationProductInfo = orderConfirmationPage.getProductInfo().toLowerCase();
         Assert.assertTrue(orderConfirmationProductInfo.contains(expectedProductName.toLowerCase()));
     }
@@ -107,41 +109,39 @@ public class PrestaShopTests {
     public void testLoginAtCheckOut() {
         //choosing test data
         TestUser testUser = testUsers.get("theShortie");
-        int productPosition = 2; //The position on the page of the product that will be bought
+        int productPosition = 2; //The position on the page of the product that will be bought (1-8)
 
         createAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.password);
         topMenu.clickSignOut();
 
         //Saving info about product name and price of the product that will be bought.
-        final String expectedProductName = homePage.getProductNameNumber(productPosition);
-        final double expectedPrice = homePage.getProductPriceNumber(productPosition);
+        final String expectedProductName = homePage.getProductNameForPosition(productPosition);
+        final double expectedPrice = homePage.getProductPriceForPosition(productPosition);
 
-        CartPage cartPage
-                = addProductAndProceedToCart(productPosition, expectedProductName, expectedPrice);
+        CartPage cartPage = addProductAndProceedToCart(productPosition, expectedProductName, expectedPrice); //This method also contains asserts.
 
-        CheckOutPersonalPage checkOutPersonalPage = cartPage.clickCheckOut();
-
-        SignInAtCheckOutPage signInAtCheckOutPage = checkOutPersonalPage.clickSignIn();
-        CheckOutAddressesPage checkOutAddressesPage = signInAtCheckOutPage.preformLogin(testUser.email, testUser.password);
-
-        CheckOutShippingPage checkOutShippingPage
-                = checkOutAddressesPage.setMandatoryFieldsAndContinue(testUser.address, testUser.postcode, testUser.city);
-        CheckOutPaymentPage checkOutPaymentPage = checkOutShippingPage.clickContinue();
-        checkOutPaymentPage.chooseBankWire();
-        checkOutPaymentPage.setConditionsBox(true);
-        OrderConfirmationPage orderConfirmationPage = checkOutPaymentPage.clickOrder();
-
+        CheckOutPersonalPage checkOutPersonalPage = cartPage
+                .clickCheckOut();
+        SignInAtCheckOutPage signInAtCheckOutPage = checkOutPersonalPage
+                .clickSignIn();
+        CheckOutAddressesPage checkOutAddressesPage = signInAtCheckOutPage
+                .preformLogin(testUser.email, testUser.password);
+        CheckOutShippingPage checkOutShippingPage = checkOutAddressesPage
+                .setMandatoryFieldsAndContinue(testUser.address, testUser.postcode, testUser.city);
+        CheckOutPaymentPage checkOutPaymentPage = checkOutShippingPage
+                .clickContinue();
+        checkOutPaymentPage
+                .chooseBankWire();
+        checkOutPaymentPage
+                .setConditionsBox(true);
+        OrderConfirmationPage orderConfirmationPage = checkOutPaymentPage
+                .clickOrder();
         //Check that order confirmation has the correct price, product and email.
         Assert.assertEquals(expectedPrice, orderConfirmationPage.getTotalValue(),0.1);
         Assert.assertTrue(orderConfirmationPage.getEmailConformationText().contains(testUser.email));
-
         String orderConfirmationProductInfo = orderConfirmationPage.getProductInfo().toLowerCase();
-        Assert.assertTrue(orderConfirmationProductInfo.contains(expectedProductName.toLowerCase()));
-
-        //Cleaning
-        topMenu.clickSignOut();
+        Assert.assertTrue(orderConfirmationProductInfo.startsWith(expectedProductName.toLowerCase()));
     }
-
 
 
     /**
@@ -149,24 +149,24 @@ public class PrestaShopTests {
      */
     @Test
     public void testChangeQuantityAtCheckOut() {
-        final int productPosition = 2; //The position on the page of the product that will be added to cart
+        final int productPosition = 4; //The position on the page of the product that will be added to cart (1-8).
 
-        //Saving info about product name and price of the product that will be bought.
-        final double productPrice = homePage.getProductPriceNumber(productPosition);
-        final String productName = homePage.getProductNameNumber(productPosition);
+        //Saving info about product name and price of the product that will be added to cart.
+        final double productPrice = homePage.getProductPriceForPosition(productPosition);
+        final String productName = homePage.getProductNameForPosition(productPosition);
 
-        CartPage cartPage
-                = addProductAndProceedToCart(productPosition, productName, productPrice);
-        //Check that number of products and price changes correct while increasing amount of products
+        CartPage cartPage = addProductAndProceedToCart(productPosition, productName, productPrice); //This method also contains asserts.
+
+        //Check that number of products and price changes correct while increasing amount of items
         for(int nbrOfItems = 1; nbrOfItems < 5; nbrOfItems++) {
-            Assert.assertEquals(nbrOfItems, cartPage.getTotalNrOfItems());
+            Assert.assertEquals(nbrOfItems, cartPage.getTotalNmbrOfItems());
             Assert.assertEquals(productPrice*nbrOfItems, cartPage.getTotalPrice(), 0.1);
             cartPage.increaseQuantity();
         }
 
-        //Check that number of products and price changes correct while decreasing amount of products
+        //Check that number of products and price changes correct while decreasing amount of items
         for(int nbrOfItems = 5; nbrOfItems > 0; nbrOfItems--) {
-            Assert.assertEquals(nbrOfItems, cartPage.getTotalNrOfItems());
+            Assert.assertEquals(nbrOfItems, cartPage.getTotalNmbrOfItems());
             Assert.assertEquals(productPrice*nbrOfItems, cartPage.getTotalPrice(), 0.1);
             cartPage.decreaseQuantity();
         }
@@ -179,35 +179,26 @@ public class PrestaShopTests {
     }
 
 
-
     /**
      * 5 As a customer I want to be able to search for a product so it's easy to find what I'm looking for.
      */
     @Test
     public void testSearchProduct() {
-        final String searchString = "bear";
-        final int expectedNbrOfHits = testSearchStrings.get("bear");
+        //choosing test data
+        final TestSearch search = testSearchStrings.get("bear");
 
-        SearchResultsPage searchResultsPage = topMenu.searchCatalog(searchString);
-
+        SearchResultsPage searchResultsPage = topMenu.searchCatalog(search.searchString);
         int foundProducts = searchResultsPage.getNumberOfFoundProducts();
-
         //Check if number of found results is as expected
-        Assert.assertEquals(expectedNbrOfHits, foundProducts);
+        Assert.assertEquals(search.expectedNmbOfHits, foundProducts);
 
         //Check if products found contains the searched string
         for(int productPosition = 1; productPosition <= foundProducts; productPosition++) {
             String foundProductName = searchResultsPage.getProductNameForResult(productPosition).toLowerCase();
-            Assert.assertTrue(foundProductName.contains(searchString));
+            Assert.assertTrue(foundProductName.contains(search.searchString));
         }
-
     }
 
-
-    @AfterClass
-    public static void afterClass() {
-        //driver.quit();
-    }
 
 
 
@@ -219,21 +210,21 @@ public class PrestaShopTests {
 
 
     public CartPage addProductAndProceedToCart(int productNumber, String expectedProductName, double expectedPrice) {
-        ProductPage productPage = homePage.clickProductNumber(productNumber);
 
+        ProductPage productPage = homePage.clickProductInPosition(productNumber);
         //Check that product on product page matches the product clicked.
-        Assert.assertTrue(expectedProductName.equalsIgnoreCase(productPage.getProductName()));
+        Assert.assertTrue(productPage.getProductName().toLowerCase().startsWith(expectedProductName.toLowerCase()));
 
         ProductAddedPage productAddedPage = productPage.clickAddToCartButton();
-
         //Check that right product is added, correct price and amount of products in cart.
-        Assert.assertTrue(expectedProductName.equalsIgnoreCase(productAddedPage.getProductName()));
+        Assert.assertTrue(productAddedPage.getProductName().toLowerCase().startsWith(expectedProductName.toLowerCase()));
         Assert.assertEquals(1, productAddedPage.getAmountOfProducts());
         Assert.assertEquals(expectedPrice, productAddedPage.getPriceOfProducts(), 0.1);
 
         CartPage cartPage = productAddedPage.clickCheckout();
         //Check that price is correct in cart
         Assert.assertEquals(expectedPrice, cartPage.getTotalPrice(),0.1);
+
         return cartPage;
     }
 }

@@ -19,8 +19,8 @@ public class SearchResultsPage extends Page {
         return Integer.parseInt(numberOfProd);
     }
 
-    public String getProductNameForResult(int i){
-        By productNamei = By.cssSelector("#js-product-list > div.products.row > article:nth-child(" + i + ") > div > div.product-description > h2 > a");
-        return driver.findElement(productNamei).getText();
+    public String getProductNameForResult(int position){
+        By productName = By.cssSelector("article:nth-child(" + position + ") > div > div.product-description > h2 > a");
+        return driver.findElement(productName).getText();
     }
 }

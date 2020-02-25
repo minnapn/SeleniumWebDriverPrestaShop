@@ -19,25 +19,19 @@ public class HomePage extends Page{
         return new HomePage(driver);
     }
 
-
-    public By getProductNumber(int i){
-        //return By.cssSelector(".product-miniature:nth-child(" + i + ")img");
-        return By.cssSelector("#content > section > div > article:nth-child("+i+") > div > a > img");
+    public String getProductNameForPosition(int position){
+        String productName = driver.findElement(By.cssSelector("article:nth-child("+position+") > div > div.product-description > h3 > a")).getText();
+        productName = productName.substring(0,productName.length()-3); //removing last 3 characters because if name is long the last three chars are dots.
+        return productName;
     }
 
-    public String getProductNameNumber(int i){
-        return driver.findElement(By.cssSelector("#content > section > div > article:nth-child("+i+") > div > div.product-description > h3 > a")).getText();
-        //return driver.findElement(By.cssSelector(".product-miniature:nth-child(" + i +").product-description a")).getText();
-    }
-
-    public ProductPage clickProductNumber(int i){
-        driver.findElement(getProductNumber(i)).click();
+    public ProductPage clickProductInPosition(int position){
+        driver.findElement(By.cssSelector("article:nth-child("+position+") > div > a > img")).click();
         return new ProductPage(driver);
     }
 
-    public double getProductPriceNumber(int i) {
-        String priceString = driver.findElement(By.cssSelector("#content > section > div > article:nth-child(" + i + ") > div > div.product-description > div > span.price")).getText();
-        //String priceString = driver.findElement(By.cssSelector(".product-miniature:nth-child(" + i +").price")).getText();
+    public double getProductPriceForPosition(int position) {
+        String priceString = driver.findElement(By.cssSelector("article:nth-child(" + position + ") > div > div.product-description > div > span.price")).getText();
         return Double.parseDouble(priceString.substring(1));
     }
 }

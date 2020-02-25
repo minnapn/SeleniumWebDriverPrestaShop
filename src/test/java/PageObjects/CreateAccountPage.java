@@ -20,7 +20,6 @@ public class CreateAccountPage extends Page{
         wait.until(ExpectedConditions.visibilityOfElementLocated(header));
     }
 
-
     public void clickSaveButton(){
         driver.findElement(saveButton).click();
     }
