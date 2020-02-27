@@ -2,19 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a5dfcb67-5f97-4bcd-bc7c-930b221ff519" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/TestDataObjects/TestSearch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/CartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/CartPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/CreateAccountPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/CreateAccountPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/HomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/HomePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/SearchResultsPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/SearchResultsPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/SignInAtCheckOutPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/SignInAtCheckOutPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/TopMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/TopMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PrestaShopTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PrestaShopTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/TestDataObjects/TestDataSetUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestDataObjects/TestDataSetUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/PageObjects/CreateAccountPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PageObjects/CreateAccountPage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/PageObjects/SignInPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PageObjects/SignInPage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/PageObjects/TopMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PageObjects/TopMenu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/PrestaShopTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PrestaShopTests.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -151,7 +141,13 @@
       <option name="presentableId" value="LOCAL−00002" />
       <updated>1582535855561</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL−00003" summary="Added @After tearDown() method, updated locators and updated test data setup.">
+      <created>1582629616798</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1582629616798</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -170,6 +166,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Complete test cases, better POM, TODO: need to update locators" />
     <MESSAGE value="Updated locators and test data" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated locators and test data" />
+    <MESSAGE value="Added @After tearDown() method, updated locators and updated test data setup." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added @After tearDown() method, updated locators and updated test data setup." />
   </component>
 </project>

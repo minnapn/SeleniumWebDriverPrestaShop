@@ -50,9 +50,9 @@ public class PrestaShopTests {
     @Test
     public void testCreateAccount() {
         //choosing test data
-        TestUser testUser = testUsers.get("theLongie");
+        TestUser testUser = testUsers.get("theLong");
 
-        createAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.password);
+        createAccountFromTopMenu(testUser.firstName, testUser.lastName, testUser.email, testUser.password);
         //Check that login worked by sign out becoming visible
         Assert.assertTrue(topMenu.signOutVisible());
         //Check that logged in to the correct account
@@ -76,18 +76,16 @@ public class PrestaShopTests {
 
         CartPage cartPage = addProductAndProceedToCart(productPosition, expectedProductName, expectedPrice); //This method also contains asserts.
 
-        CheckOutPersonalPage checkOutPersonalPage = cartPage
-                .clickCheckOut();
-        CheckOutAddressesPage checkOutAddressesPage = checkOutPersonalPage
+        CheckOutAddressesPage checkOutAddressesPage = cartPage
+                .clickCheckOut()
                 .setMandatoryFieldsAndContinue(testUser.firstName, testUser.lastName, testUser.email);
         //Check that name is filled with the name that was set in previous step
         Assert.assertEquals(testUser.firstName, checkOutAddressesPage.getFirstName());
         Assert.assertEquals(testUser.lastName, checkOutAddressesPage.getLastName());
 
-        CheckOutShippingPage checkOutShippingPage = checkOutAddressesPage
-                .setMandatoryFieldsAndContinue(testUser.address, testUser.postcode, testUser.city);
-        CheckOutPaymentPage checkOutPaymentPage = checkOutShippingPage
-                .clickContinue();
+       CheckOutPaymentPage checkOutPaymentPage = checkOutAddressesPage
+               .setMandatoryFieldsAndContinue(testUser.address, testUser.postcode, testUser.city)
+               .clickContinue();
         checkOutPaymentPage
                 .chooseBankWire();
         checkOutPaymentPage
@@ -111,7 +109,7 @@ public class PrestaShopTests {
         TestUser testUser = testUsers.get("theShortie");
         int productPosition = 2; //The position on the page of the product that will be bought (1-8)
 
-        createAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.password);
+        createAccountFromTopMenu(testUser.firstName, testUser.lastName, testUser.email, testUser.password); //Creating the account that will be logged in to at check out
         topMenu.clickSignOut();
 
         //Saving info about product name and price of the product that will be bought.
@@ -120,15 +118,11 @@ public class PrestaShopTests {
 
         CartPage cartPage = addProductAndProceedToCart(productPosition, expectedProductName, expectedPrice); //This method also contains asserts.
 
-        CheckOutPersonalPage checkOutPersonalPage = cartPage
-                .clickCheckOut();
-        SignInAtCheckOutPage signInAtCheckOutPage = checkOutPersonalPage
-                .clickSignIn();
-        CheckOutAddressesPage checkOutAddressesPage = signInAtCheckOutPage
-                .preformLogin(testUser.email, testUser.password);
-        CheckOutShippingPage checkOutShippingPage = checkOutAddressesPage
-                .setMandatoryFieldsAndContinue(testUser.address, testUser.postcode, testUser.city);
-        CheckOutPaymentPage checkOutPaymentPage = checkOutShippingPage
+        CheckOutPaymentPage checkOutPaymentPage = cartPage
+                .clickCheckOut()
+                .clickSignIn()
+                .preformLogin(testUser.email, testUser.password)
+                .setMandatoryFieldsAndContinue(testUser.address, testUser.postcode, testUser.city)
                 .clickContinue();
         checkOutPaymentPage
                 .chooseBankWire();
@@ -202,10 +196,10 @@ public class PrestaShopTests {
 
 
 
-    public void createAccount(String firstName, String lastName, String email, String password) {
-        SignInPage signInPage = topMenu.clickSignIn();
-        CreateAccountPage createAccountPage = signInPage.clickCreateAccount();
-        createAccountPage.createAccount(firstName, lastName, email, password);
+    public void createAccountFromTopMenu(String firstName, String lastName, String email, String password) {
+        topMenu.clickSignIn()
+                .clickCreateAccount()
+                .createAccount(firstName, lastName, email, password);
     }
 
 

@@ -34,7 +34,7 @@ public class TestDataSetUp {
             testUser2.address = "Strawberrycheesecakewithlotsofcherrysroad 57891234";
             testUser2.postcode = "55555";
             testUser2.city = "Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch";
-            testUsers.put("theLongie", testUser2);
+            testUsers.put("theLong", testUser2);
 
             TestUser testUser3 = new TestUser();
             testUser3.firstName = "Ed";
