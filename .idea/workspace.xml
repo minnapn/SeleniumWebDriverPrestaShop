@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a5dfcb67-5f97-4bcd-bc7c-930b221ff519" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/PageObjects/CheckOutPaymentPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PageObjects/CheckOutPaymentPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PrestaShopTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PrestaShopTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestDataObjects/TestDataSetUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestDataObjects/TestDataSetUp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/PrestaShopTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PrestaShopTests.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,6 +37,7 @@
   <component name="ProjectId" id="1XhTsU5bQcrdjNMezK91EkooyoL" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="C:/Program Files/Git/bin/git.exe" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -147,7 +151,13 @@
       <option name="presentableId" value="LOCAL−00003" />
       <updated>1582629616798</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL−00004" summary="Cleaner code and renaming">
+      <created>1582788904934</created>
+      <option name="number" value="LOCAL−00004" />
+      <option name="presentableId" value="LOCAL−00004" />
+      <updated>1582788904934</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -167,6 +177,7 @@
     <MESSAGE value="Complete test cases, better POM, TODO: need to update locators" />
     <MESSAGE value="Updated locators and test data" />
     <MESSAGE value="Added @After tearDown() method, updated locators and updated test data setup." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added @After tearDown() method, updated locators and updated test data setup." />
+    <MESSAGE value="Cleaner code and renaming" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleaner code and renaming" />
   </component>
 </project>

@@ -83,14 +83,11 @@ public class PrestaShopTests {
         Assert.assertEquals(testUser.firstName, checkOutAddressesPage.getFirstName());
         Assert.assertEquals(testUser.lastName, checkOutAddressesPage.getLastName());
 
-       CheckOutPaymentPage checkOutPaymentPage = checkOutAddressesPage
-               .setMandatoryFieldsAndContinue(testUser.address, testUser.postcode, testUser.city)
-               .clickContinue();
-        checkOutPaymentPage
-                .chooseBankWire();
-        checkOutPaymentPage
-                .setConditionsBox(true);
-        OrderConfirmationPage orderConfirmationPage = checkOutPaymentPage
+        OrderConfirmationPage orderConfirmationPage = checkOutAddressesPage
+                .setMandatoryFieldsAndContinue(testUser.address, testUser.postcode, testUser.city)
+                .clickContinue()
+                .chooseBankWire()
+                .setConditionsBox(true)
                 .clickOrder();
         //Check that order confirmation has the correct price, product and email.
         Assert.assertEquals(expectedPrice, orderConfirmationPage.getTotalValue(),0.1);
@@ -118,17 +115,14 @@ public class PrestaShopTests {
 
         CartPage cartPage = addProductAndProceedToCart(productPosition, expectedProductName, expectedPrice); //This method also contains asserts.
 
-        CheckOutPaymentPage checkOutPaymentPage = cartPage
+        OrderConfirmationPage orderConfirmationPage = cartPage
                 .clickCheckOut()
                 .clickSignIn()
                 .preformLogin(testUser.email, testUser.password)
                 .setMandatoryFieldsAndContinue(testUser.address, testUser.postcode, testUser.city)
-                .clickContinue();
-        checkOutPaymentPage
-                .chooseBankWire();
-        checkOutPaymentPage
-                .setConditionsBox(true);
-        OrderConfirmationPage orderConfirmationPage = checkOutPaymentPage
+                .clickContinue()
+                .chooseBankWire()
+                .setConditionsBox(true)
                 .clickOrder();
         //Check that order confirmation has the correct price, product and email.
         Assert.assertEquals(expectedPrice, orderConfirmationPage.getTotalValue(),0.1);

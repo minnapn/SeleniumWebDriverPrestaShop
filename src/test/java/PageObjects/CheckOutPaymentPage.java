@@ -16,14 +16,16 @@ public class CheckOutPaymentPage extends Page{
         wait.until(ExpectedConditions.visibilityOfElementLocated(orderButton));
     }
 
-    public void chooseBankWire() {
+    public CheckOutPaymentPage chooseBankWire() {
         driver.findElement(bankWire).click();
+        return this;
     }
 
-    public void setConditionsBox(boolean check){
+    public CheckOutPaymentPage setConditionsBox(boolean check){
         if(!(driver.findElement(conditionsBox).isSelected() == check)) {
             driver.findElement(conditionsBox).click();
         }
+        return this;
     }
 
     public OrderConfirmationPage clickOrder(){
